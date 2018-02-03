@@ -88,21 +88,24 @@
 
         <md-list class="md-triple-line" v-for="(article,index) in filteredArticles" :key="index" v-on:click.native="toggleActive(article)"
             v-bind:class="{ 'active': !article.gsx$active.$t}" md-with-hover>
+
+            <md-subheader>{{ article.gsx$title.$t }}</md-subheader>
             <md-list-item>
                 <md-avatar class="md-large">
                     <img v-bind:src="article.gsx$image.$t" />
                 </md-avatar>
 
                 <div class="md-list-item-text">
-                    <p>Салата: {{ article.gsx$title.$t }}</p>
                     <p>Описание: {{ article.gsx$description.$t }}</p>
+                    <p>Тегло: {{ article.gsx$weigth.$t }} гр.</p>
                     <p>Цена: {{ article.gsx$price.$t }} {{ article.gsx$currency.$t }}</p>
                 </div>
 
                 <md-button class="md-icon-button md-list-action">
-                    <md-icon class="md-primary">star</md-icon>
+                    <md-icon class="md-primary">info</md-icon>
                 </md-button>
             </md-list-item>
+            <md-divider class="md-inset"></md-divider>
         </md-list>
     </div>
 
