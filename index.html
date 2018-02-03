@@ -88,12 +88,10 @@
         <md-toolbar class="md-primary md-dense" :md-elevation="0" style="position: fixed;">
             <span class="md-title">Обедно меню: {{ currDay(dayNow) }} {{ dateNow }}</span>
         </md-toolbar>
-
+        <br><br>
         <md-list style="z-index:-1;" class="md-triple-line" v-for="(article,index) in filteredArticles" :key="index" v-on:click.native="toggleActive(article)"
             v-bind:class="{ 'active': !article.gsx$active.$t}" md-with-hover>
-            <p>
-                <br>
-            </p>
+
             <md-subheader>{{ capitalizeFirstLetter(article.gsx$title.$t) }}</md-subheader>
             <md-list-item>
                 <md-avatar class="md-large">
