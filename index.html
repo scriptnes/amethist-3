@@ -86,8 +86,8 @@
             </md-dialog-actions>
         </md-dialog> -->
         <div>
-            <md-toolbar class="md-primary" :md-elevation="0" style="position: fixed;">
-                <span class="md-title">Обедно меню: {{ currDay(dayNow) }} - {{ dateNow }}</span>
+            <md-toolbar class="md-primary md-dense" :md-elevation="0" style="position: fixed;">
+                <span class="md-title">Обедно меню: {{ currDay(dayNow) }} {{ dateNow }}</span>
             </md-toolbar>
             <md-list style="z-index:-1;" class="md-triple-line" v-for="(article,index) in filteredArticles" :key="index" v-on:click.native="toggleActive(article)"
                 v-bind:class="{ 'active': !article.gsx$active.$t}" md-with-hover>
