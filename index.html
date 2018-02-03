@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width,initial-scale=1,minimal-ui" name="viewport">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,400italic|Material+Icons">
+    <link rel="stylesheet" href="https://unpkg.com/vue-material@beta/dist/vue-material.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/vue-material@beta/dist/theme/default.css">
+    <title>Amethist Menu Demo</title>
+    <script src="https://unpkg.com/vue"></script>
+    <script src="https://unpkg.com/vue-material@beta"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.js" integrity="sha256-fNXJFIlca05BIO2Y5zh1xrShK3ME+/lYZ0j+ChxX2DA="
+        crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <!-- demo root element -->
+    <div id="demo">
+        <!-- <div id="capture" style="max-width:500px;" v-cloak>
+            <md-app md-mode="fixed">
+                <md-app-toolbar class="md-primary">
+                    <div class="md-layout md-gutter md-alignment-center-center">
+                        <div class="md-layout-item md-size-65">
+                            <md-field md-clearable>
+                                <md-input v-model="searchString" placeholder="Търсете в артикулите"></md-input>
+                            </md-field>
+                        </div>
+                        <div class="md-layout-item md-size-35">
+                            <md-button v-on:click.native="preview" class="md-dense md-raised md-accent">Преглед</md-button>
+                        </div>
+                    </div>
+                </md-app-toolbar>
+
+                <md-app-content id="wrapped">
+                    <md-card v-for="(article,index) in filteredArticles" :key="index" v-on:click.native="toggleActive(article)" v-bind:class="{ 'active': !article.gsx$active.$t}"
+                        md-with-hover>
+                        <img v-bind:src="article.gsx$image.$t" />
+                        <md-card-header>
+                            <div class="md-title">
+                                <span>{{ article.gsx$title.$t }}</span>
+                            </div>
+                        </md-card-header>
+
+                        <md-card-content>
+                            <p>Описание: {{ article.gsx$description.$t }}</p>
+                            <p>Тегло: {{ article.gsx$weigth.$t }} гр.</p>
+                            <p>Цена: {{ article.gsx$price.$t }} {{ article.gsx$currency.$t }}</p>
+                        </md-card-content>
+                    </md-card>
+
+                </md-app-content>
+            </md-app>
+        </div> -->
+
+
+        <!-- <md-dialog :md-active.sync="showDialog">
+            <md-dialog-title id="capture">
+                <h3>Обедно меню</h3>
+                <p>{{ currDay(dayNow) }} - {{ dateNow }}</p>
+            </md-dialog-title>
+
+            <md-app md-mode="fixed">
+                <md-app-content>
+                    <md-card v-for="(article,index) in reservedArticles" :key="index">
+                        <img v-bind:src="article.gsx$image.$t" />
+                        <md-card-header>
+                            <div class="md-title">
+                                <span>{{ article.gsx$title.$t }}</span>
+                            </div>
+                        </md-card-header>
+
+                        <md-card-content>
+                            <p>Описание: {{ article.gsx$description.$t }}</p>
+                            <p>Тегло: {{ article.gsx$weigth.$t }} гр.</p>
+                            <p>Цена: {{ article.gsx$price.$t }} {{ article.gsx$currency.$t }}</p>
+                        </md-card-content>
+                    </md-card>
+                </md-app-content>
+            </md-app>
+
+            <md-dialog-actions>
+                <md-button class="md-primary" @click="showDialog = false">Затвори</md-button>
+                <md-button class="md-primary" @click="showDialog = false">Сподели</md-button>
+            </md-dialog-actions>
+        </md-dialog> -->
+
+        <md-list class="md-triple-line" v-for="(article,index) in filteredArticles" :key="index" v-on:click.native="toggleActive(article)"
+            v-bind:class="{ 'active': !article.gsx$active.$t}" md-with-hover>
+            <md-list-item>
+                <md-avatar class="md-large">
+                    <img v-bind:src="article.gsx$image.$t" />
+                </md-avatar>
+
+                <div class="md-list-item-text">
+                    <p>Салата: {{ article.gsx$title.$t }}</p>
+                    <p>Описание: {{ article.gsx$description.$t }}</p>
+                    <p>Цена: {{ article.gsx$price.$t }} {{ article.gsx$currency.$t }}</p>
+                </div>
+
+                <md-button class="md-icon-button md-list-action">
+                    <md-icon class="md-primary">star</md-icon>
+                </md-button>
+            </md-list-item>
+        </md-list>
+    </div>
+
+    <script>
+        Vue.use(VueMaterial.default);
+
+        Vue.filter('currency', function (value) {
+            return '$' + value.toFixed(2);
+        });
+
+        new Vue({
+            el: '#demo',
+            data: {
+                searchString: "",
+                articles: [],
+                reservedArticles: [],
+                showDialog: false,
+                dateNow: new Date().toLocaleDateString(),
+                dayNow: new Date().getDay(),
+            },
+
+            methods: {
+
+                toggleActive: function (s) {
+                    s.gsx$active.$t = !s.gsx$active.$t;
+                },
+                preview: function () {
+                    let self = this;
+                    let count = 0;
+                    this.articles.forEach(function (a) {
+                        if (Boolean(a.gsx$active.$t) === false) {
+                            self.reservedArticles.push(a);
+                            count++;
+                        }
+                    });
+                    console.log(count);
+                    this.showDialog = true;
+
+                },
+
+                getJSON: function () {
+                    let self = this;
+                    let url = 'https://spreadsheets.google.com/feeds/list/1vBaMFyH3DTWyux2Q0iHfYFtbrJyu4gay94Sc-P9v-2k/od6/public/values?alt=json';
+
+                    axios.get(url).then(response => {
+                        self.articles = response.data.feed.entry
+                    });
+                },
+                currDay(cDay) {
+                    let c_day = ['Неделя', 'Понеделник', 'Вторник', 'Сряда', 'Четвъртък', 'Петък', 'Събота'];
+                    return c_day[cDay];
+                },
+
+            },
+
+            created() {
+                this.getJSON();
+            },
+
+            computed: {
+                filteredArticles: function () {
+                    let articles_array = this.articles;
+                    let searchString = this.searchString;
+
+                    if (!searchString) {
+                        return articles_array;
+                    }
+
+                    searchString = searchString.trim().toLowerCase();
+
+                    articles_array = articles_array.filter(function (item) {
+                        if (item.gsx$title.$t.toLowerCase().indexOf(searchString) !== -1) {
+                            return item;
+                        }
+                    })
+
+                    // Return an array with the filtered data.
+                    return articles_array;
+                }
+            }
+
+        })
+    </script>
+
+
+
+    <style>
+        div.md-card.md-theme-default.md-with-hover.active {
+            background-color: #8ec16d;
+        }
+    </style>
+</body>
+
+</html>
