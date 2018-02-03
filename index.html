@@ -85,28 +85,32 @@
                 <md-button class="md-primary" @click="showDialog = false">Сподели</md-button>
             </md-dialog-actions>
         </md-dialog> -->
+        <div>
+            <md-toolbar class="md-primary" :md-elevation="0" style="position: fixed;">
+                <span class="md-title">Обедно меню: {{ currDay(dayNow) }} - {{ dateNow }}</span>
+            </md-toolbar>
+            <md-list style="z-index:-1;" class="md-triple-line" v-for="(article,index) in filteredArticles" :key="index" v-on:click.native="toggleActive(article)"
+                v-bind:class="{ 'active': !article.gsx$active.$t}" md-with-hover>
 
-        <md-list class="md-triple-line" v-for="(article,index) in filteredArticles" :key="index" v-on:click.native="toggleActive(article)"
-            v-bind:class="{ 'active': !article.gsx$active.$t}" md-with-hover>
+                <md-subheader>{{ article.gsx$title.$t }}</md-subheader>
+                <md-list-item>
+                    <md-avatar class="md-large">
+                        <img v-bind:src="article.gsx$image.$t" />
+                    </md-avatar>
 
-            <md-subheader>{{ article.gsx$title.$t }}</md-subheader>
-            <md-list-item>
-                <md-avatar class="md-large">
-                    <img v-bind:src="article.gsx$image.$t" />
-                </md-avatar>
+                    <div class="md-list-item-text">
+                        <p>Описание: {{ article.gsx$description.$t }}</p>
+                        <p>Тегло: {{ article.gsx$weigth.$t }} гр.</p>
+                        <p>Цена: {{ article.gsx$price.$t }} {{ article.gsx$currency.$t }}</p>
+                    </div>
 
-                <div class="md-list-item-text">
-                    <p>Описание: {{ article.gsx$description.$t }}</p>
-                    <p>Тегло: {{ article.gsx$weigth.$t }} гр.</p>
-                    <p>Цена: {{ article.gsx$price.$t }} {{ article.gsx$currency.$t }}</p>
-                </div>
-
-                <md-button class="md-icon-button md-list-action">
-                    <md-icon class="md-primary">info</md-icon>
-                </md-button>
-            </md-list-item>
-            <md-divider class="md-inset"></md-divider>
-        </md-list>
+                    <md-button class="md-icon-button md-list-action">
+                        <md-icon class="md-primary">info</md-icon>
+                    </md-button>
+                </md-list-item>
+                <md-divider class="md-inset"></md-divider>
+            </md-list>
+        </div>
     </div>
 
     <script>
