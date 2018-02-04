@@ -85,12 +85,13 @@
                 <md-button class="md-primary" @click="showDialog = false">Сподели</md-button>
             </md-dialog-actions>
         </md-dialog> -->
-        <md-toolbar class="md-primary md-dense" :md-elevation="0" style="position: fixed;">
-            <span class="md-title">Обедно меню: {{ currDay(dayNow) }} {{ dateNow }}</span>
-        </md-toolbar>
-        <br>
-        <br>
-        <!-- <md-list style="z-index:-1;" class="md-triple-line" v-for="(article,index) in filteredArticles" :key="index" v-on:click.native="toggleActive(article)"
+        <div class="md-layout md-gutter md-alignment-center-center">
+            <md-toolbar class="md-primary md-dense" :md-elevation="0" style="overflow: hidden;position: fixed;top: 0;width: 100%;">
+                <span class="md-title">Обедно меню: {{ currDay(dayNow) }} {{ dateNow }}</span>
+            </md-toolbar>
+            <br>
+            <br>
+            <!-- <md-list style="z-index:-1;" class="md-triple-line" v-for="(article,index) in filteredArticles" :key="index" v-on:click.native="toggleActive(article)"
             v-bind:class="{ 'active': !article.gsx$active.$t}" md-with-hover>
 
             <md-subheader>{{ capitalizeFirstLetter(article.gsx$title.$t) }}</md-subheader>
@@ -111,26 +112,28 @@
             </md-list-item>
             <md-divider class="md-inset"></md-divider>
         </md-list> -->
-        <md-app>
-            <md-app-content id="wrapped">
-                <md-card v-for="(article,index) in filteredArticles" :key="index" v-on:click.native="toggleActive(article)" v-bind:class="{ 'active': !article.gsx$active.$t}"
-                    md-with-hover>
-                    <img v-bind:src="article.gsx$image.$t" />
-                    <md-card-header>
-                        <div class="md-title">
-                            <span>{{ capitalizeFirstLetter(article.gsx$title.$t) }}</span>
-                        </div>
-                    </md-card-header>
+            <md-app>
+                <md-app-content id="wrapped" style="max-width:600px;">
+                    <md-card v-for="(article,index) in filteredArticles" :key="index" v-on:click.native="toggleActive(article)" v-bind:class="{ 'active': !article.gsx$active.$t}"
+                        md-with-hover>
+                        <img v-bind:src="article.gsx$image.$t" />
+                        <md-card-header>
+                            <div class="md-title">
+                                <span>{{ capitalizeFirstLetter(article.gsx$title.$t) }}</span>
+                            </div>
+                        </md-card-header>
 
-                    <md-card-content>
-                        <p>Състав: {{ capitalizeFirstLetter(article.gsx$description.$t) }}</p>
-                        <p>Грамаж: {{ article.gsx$weigth.$t }} гр.</p>
-                        <p>Цена: {{ article.gsx$price.$t }} лв.</p>
-                    </md-card-content>
-                </md-card>
+                        <md-card-content>
+                            <p>Състав: {{ capitalizeFirstLetter(article.gsx$description.$t) }}</p>
+                            <p>Грамаж: {{ article.gsx$weigth.$t }} гр.</p>
+                            <p>Цена: {{ article.gsx$price.$t }} лв.</p>
+                        </md-card-content>
+                    </md-card>
 
-            </md-app-content>
-        </md-app>
+                </md-app-content>
+            </md-app>
+
+        </div>
 
     </div>
 
