@@ -26,7 +26,7 @@
             <br>
             <md-app>
                 <md-app-content id="wrapped" style="max-width:600px;">
-                    <md-card v-for="(article,index) in filteredArticles" :key="index" v-on:click.native="toggleActive(article)" md-with-hover>
+                    <md-card v-for="(article,index) in articles" :key="index" md-with-hover>
                         <img v-bind:src="article.gsx$image.$t" />
                         <md-card-header>
                             <div class="md-title">
@@ -51,10 +51,6 @@
     <script>
         Vue.use(VueMaterial.default);
 
-        Vue.filter('currency', function (value) {
-            return '$' + value.toFixed(2);
-        });
-
         new Vue({
             el: '#demo',
             data: {
@@ -64,29 +60,10 @@
                 showDialog: false,
                 dateNow: new Date().toLocaleDateString(),
                 dayNow: new Date().getDay(),
-
-                test: [],
-                imageIds: [],
             },
 
             methods: {
 
-                toggleActive: function (s) {
-                    s.gsx$active.$t = !s.gsx$active.$t;
-                },
-                preview: function () {
-                    let self = this;
-                    let count = 0;
-                    this.articles.forEach(function (a) {
-                        if (Boolean(a.gsx$active.$t) === false) {
-                            self.reservedArticles.push(a);
-                            count++;
-                        }
-                    });
-                    console.log(count);
-                    this.showDialog = true;
-
-                },
                 getJSON: function () {
                     let self = this;
                     let url = 'https://spreadsheets.google.com/feeds/list/1TT8WptUe8XEHdta4yp-zG0JGdXpwE4h-3VVc0Pfg8yY/od6/public/values?alt=json';
@@ -107,28 +84,6 @@
             created() {
                 this.getJSON();
             },
-
-            computed: {
-                filteredArticles: function () {
-                    let articles_array = this.articles;
-                    let searchString = this.searchString;
-
-                    if (!searchString) {
-                        return articles_array;
-                    }
-
-                    searchString = searchString.trim().toLowerCase();
-
-                    articles_array = articles_array.filter(function (item) {
-                        if (item.gsx$title.$t.toLowerCase().indexOf(searchString) !== -1) {
-                            return item;
-                        }
-                    })
-
-                    // Return an array with the filtered data.
-                    return articles_array;
-                }
-            }
 
         })
     </script>
