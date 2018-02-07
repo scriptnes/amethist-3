@@ -69,7 +69,7 @@
                         self.articles = response.data.feed.entry
                     });
                 },
-                currDay(cDay) {
+                currDay: function (cDay) {
                     let c_day = ['Неделя', 'Понеделник', 'Вторник', 'Сряда', 'Четвъртък', 'Петък', 'Събота'];
                     return c_day[cDay];
                 },
