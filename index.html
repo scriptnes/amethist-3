@@ -26,8 +26,7 @@
             <br>
             <md-app>
                 <md-app-content id="wrapped" style="max-width:600px;">
-                    <md-card v-for="(article,index) in filteredArticles" :key="index" v-on:click.native="toggleActive(article)" v-bind:class="{ 'active': !article.gsx$active.$t}"
-                        md-with-hover>
+                    <md-card v-for="(article,index) in filteredArticles" :key="index" v-on:click.native="toggleActive(article)" md-with-hover>
                         <img v-bind:src="article.gsx$image.$t" />
                         <md-card-header>
                             <div class="md-title">
@@ -67,6 +66,7 @@
                 dayNow: new Date().getDay(),
 
                 test: [],
+                imageIds: [],
             },
 
             methods: {
@@ -87,7 +87,6 @@
                     this.showDialog = true;
 
                 },
-
                 getJSON: function () {
                     let self = this;
                     let url = 'https://spreadsheets.google.com/feeds/list/1TT8WptUe8XEHdta4yp-zG0JGdXpwE4h-3VVc0Pfg8yY/od6/public/values?alt=json';
@@ -102,7 +101,6 @@
                 capitalizeFirstLetter: function (s) {
                     return s[0].toUpperCase() + s.slice(1);
                 },
-
 
             },
 
@@ -138,9 +136,6 @@
 
 
     <style>
-        div.md-card.md-theme-default.md-with-hover.active {
-            background-color: #8ec16d;
-        }
     </style>
 </body>
 
