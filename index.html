@@ -52,14 +52,11 @@
         new Vue({
             el: '#demo',
             data: {
-                searchString: "",
                 articles: [],
                 dateNow: new Date().toLocaleDateString(),
                 dayNow: new Date().getDay(),
             },
-
             methods: {
-
                 getJSON: function () {
                     let self = this;
                     let url = 'https://spreadsheets.google.com/feeds/list/1TT8WptUe8XEHdta4yp-zG0JGdXpwE4h-3VVc0Pfg8yY/od6/public/values?alt=json';
@@ -76,7 +73,6 @@
                 },
 
             },
-
             created() {
                 this.getJSON();
             },
