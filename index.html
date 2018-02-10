@@ -19,7 +19,7 @@
         <div class="md-layout md-gutter md-alignment-center-center">
             <md-toolbar class="md-primary md-dense" :md-elevation="0" style="overflow: hidden;position: fixed;top: 0;width: 100%;">
                 <div class="marquee">
-                    <span class="md-title md-layout md-gutter md-alignment-center-center">Обедно меню: {{ currDay(dayNow) }} {{ dateNow }}</span>
+                    <span class="md-title">Обедно меню: {{ currDay(dayNow) }} {{ dateNow }}</span>
                 </div>
             </md-toolbar>
             <br>
@@ -86,7 +86,7 @@
 
     <style>
         .marquee {
-            width: 450px;
+            width: 100%;
             color: white;
             white-space: nowrap;
             overflow: hidden;
